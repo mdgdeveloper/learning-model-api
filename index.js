@@ -1,24 +1,29 @@
-import askQuestion from "./functions/generateQuest.js";
+import { generateQuest } from "./functions/generateQuest.js";
 
-import { preguntas } from "./variables/questions.js";   
+import { preguntas } from "./variables/questions.js";
 
 const result = []
 
 preguntas.map(async (pregunta, i) => {
-    const responses = [];
     console.log(pregunta.categoria)
-    console.log("\n")
-    for (let i = 0; i < pregunta.preguntas.length; i++) {
-        const ans = await askQuestion(pregunta.preguntas[i], responses);
-    }
-    result.push(
-        {
-            categoria: pregunta.categoria,
-            respuestas: responses
-        }
-    )
+
+    const response = await generateQuest(pregunta.preguntas);
+
+    // Calculate the average of the response
+    const average = response.reduce((a, b) => a + b, 0) / response.length;
+
+    // Add to result the response as an object with the category
+    result.push({
+        category: pregunta.categoria,
+        average
+    })
+
 })
 
-console.log(result)
+// Finish all the promnises
+Promise.all(result).then(() => {
+    console.log(result)
+})
+
 
 

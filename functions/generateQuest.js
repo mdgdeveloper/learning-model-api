@@ -1,17 +1,22 @@
-import readline from 'readline';
+import { resolve } from 'path';
+// import { prompt } from "prompt-sync";
 
-export default function askQuestion(questions, responses) {  
+import promptSync from 'prompt-sync';
 
-    
-    const rl = readline.createInterface({  
-        input: process.stdin,  
-        output: process.stdout  
-      }); 
-    
-      return new Promise(resolve => rl.question(`${question} `, ans => {
-        responses.push(ans);
-        rl.close();
-        resolve(ans);
-    }))
-    }  
+const prompt = promptSync();
 
+
+function askQuestion(question) {
+  return prompt(`${question} `);
+}
+
+export async function generateQuest(questions) {
+  const responses = [];
+
+  for (const question of questions) {
+    const response = askQuestion(question);
+    responses.push(response);
+  }
+
+  return responses;
+}
