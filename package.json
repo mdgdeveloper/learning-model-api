@@ -1,0 +1,12 @@
+{
+  "name": "test-habilidades-aprendizaje",
+  "version": "1.0.0",
+  "description": "Test de Habilidades del Aprendizaje",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sergio Madrigal",
+  "license": "ISC"
+}
