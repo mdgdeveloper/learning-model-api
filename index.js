@@ -1,29 +1,19 @@
-import { generateQuest } from "./functions/generateQuest.js";
+import fastify from 'fastify';
 
-import { preguntas } from "./variables/questions.js";
+const server = fastify();
 
-const result = []
+server.get('/', async (request, reply) => {
+    return { message: 'Hello, world!' };
+});
 
-preguntas.map(async (pregunta, i) => {
-    console.log(pregunta.categoria)
+const start = async () => {
+    try {
+        await server.listen(3000);
+        console.log('Server is running on port 3000');
+    } catch (error) {
+        console.error('Error starting server:', error);
+        process.exit(1);
+    }
+};
 
-    const response = await generateQuest(pregunta.preguntas);
-
-    // Calculate the average of the response
-    const average = response.reduce((a, b) => a + b, 0) / response.length;
-
-    // Add to result the response as an object with the category
-    result.push({
-        category: pregunta.categoria,
-        average
-    })
-
-})
-
-// Finish all the promnises
-Promise.all(result).then(() => {
-    console.log(result)
-})
-
-
-
+start();
